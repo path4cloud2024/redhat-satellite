@@ -1,0 +1,11 @@
+# git init(to initialize a new repo)
+# git add <file/s_name>
+# git coomit -m "message_to_commit"
+# git branch -M
+# git remote add origin https://github.com/path4cloud2024/redhat-satellite.git
+# git push -u origin main
+
+---> push to an existing repo
+# git remote add origin https://github.com/path4cloud2024/redhat-satellite.git
+# git branch -M main
+# git push -u origin main

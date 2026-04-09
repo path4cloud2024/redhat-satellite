@@ -1,0 +1,107 @@
+#########################################
+#### Create custom repo in satellite ####
+#########################################
+
+- Create a dedicated dir for that package under /var/lib/pulp/imports/ on satellite server
+---> /var/lib/pulp/imports/<custom-repo>
+
+- Once package is placed, then createa repo metadata by running
+# createrepo_c  
+
+- and then put the path in satellite GUI under a new Repository section as yum type and url will be - file:///var/lib/pulp/imports/ngt_repo, and then sync the repo.
+
+--> Updating the existing repo with new package or new version of package
+- Copy the new package at saem directory then run, update command:
+
+# createrepo_c --update and sync the repo again
+--->
+# createrepo_c  --update .
+Directory walk started
+Directory walk done - 1 packages
+Loaded information about 1 packages
+Temporary output repo path: ./.repodata/
+Pool started (with 5 workers)
+Pool finished
+New and old repodata match, not updating.
+
+- now, go to satellite gui and sync the same repo.
+
+
+########################################################
+#### Removing/Purging Old Tasks/Jobs from satellite ####
+########################################################
+
+- It can be achieved with foreman-rake command line utility
+- To clean the all taks with any label which are older than 60 days, then:
+	# foreman-rake foreman_tasks:cleanup TASK_SEARCH='label ~ *' AFTER='60d' VERBOSE=true
+- To clean the task with specific lable, then:
+	# foreman-rake foreman_tasks:cleanup TASK_SEARCH='label = "Actions::RemoteExecution::RunHostsJob"' AFTER='60d' VERBOSE=true
+	(here, we are cleaning the Remote Execution Job with lable)
+- If any such tasks are stucked or pending for so long, and you wanted to remove that pending tasks, then:
+	# foreman-rake foreman_tasks:cleanup TASK_SEARCH='label = "Actions::RemoteExecution::RunHostsJob"' STATES='paused,planning,running' VERBOSE=true
+	(here, we put the lable for that tasks, and kill all tasks where tasks state is paused, planning or running)
+
+	- We can do with task ID as well instead of label:
+	# foreman-rake foreman_tasks:cleanup TASK_SEARCH='id = "YOUR_TASK_ID"' STATES='paused,planning,running,stopped' VERBOSE=true
+	(replace the id with real task ID)
+
+- additional help
+	- https://www.theforeman.org/plugins/foreman_tasks/0.8/index.html
+	- https://lofic.github.io/tips/satellite6-clean_tasks.html
+
+
+######################################################
+#### Removing/Purging Old CV/CCVs from satellite  ####
+######################################################
+
+- We have CV(Content View) and CCV (Composite Content View) defind the repos as per environment
+- Usually, we add the repo to CV or CV to CCV and then publishing & promoting the same which results into many versions
+- So to manage the clena satellite, ocasionally we remove the old version of CV/CCV
+- same can be acheived with hammer utility
+	# hammer content-view list
+	(Will display the ID of all CV, look for the ID of CV which you want to delete the older version)
+
+	# hammer --no-headers content-view version list --content-view-id <ID>
+	(once, we get the ID from previous step, this command will list all the versions for that particular CV/CCV)
+
+	# hammer content-view purge --count <num> --id <ID> 
+	(here, <num> is count of versions which we want to keep, <ID> is id of CV/CCV)
+
+	(for example, let say '43' is id of our CV/CCV which we want to purge and we want to keep only last 10 version, then:)
+	# hammer content-view purge --count 10 --id 43
+	(here I am keeping latest 10 version, and removing older than 10)
+
+
+
+###########################################################
+#### install or update packages in Red Hat Satellite 6 ####
+###########################################################
+
+- Commands yum update and yum install are blocked by the new feature foreman-protector. This will save the Red Hat Satellite 6 server to update or install any packages that can break the services.
+- In order to do a full update such as yum update would do, you must unlock packages, do the update, and then lock the packages. You will then need to also run the satellite-installer manually.
+	# satellite-maintain packages unlock
+	# yum update (to update the all packages)
+	# yum install <package_name> (to install a single package>
+	# yum downgrade <package_name> (to downgrade the package)
+	# satellite-installer (make sure that there is no package inconsistency after installation or upgrade)
+	
+---> Note: Downgrading or manual updating of packages on the Red Hat Satellite base OS is not recommended, as it may interfere with packages required by Red Hat Satellite and could lead to system inconsistency or service disruption.
+----------------------------------------------------------------------
+- Or alternatively which is also a RECOMMENDED METHOD, we can do it 'satellite-maintain' utility
+- The below procedure is applicable both to Satellite (with foreman-protector enabled by default) and also to Capsule (where foreman-protector is disabled by default, but can be enabled manually)
+- following commands can be executed to perform package downgrades or upgrades on the Red Hat Satellite server:
+	# satellite-maintain packages install <package_name> (to install a new package)
+	# satellite-maintain packages update <package_name> (to update the existing package)
+	# satellite-maintain packages update (to update all packages)
+
+---> Please note, every time you run the above command to update or install packages, satellite-installer will run and it will make sure that there is no package inconsistency after installation or upgrade.
+
+
+Best Practice:
+	If a package which you are installing or updating and that does not interfere with the Red Hat Satellite 6 services (like vim) then,  it is not necessary to install it via satellite-maintain (because satellite installer will run and it takes time). 
+	It is also not advised to install pulp-admin or any packages for debugging purposes with satellite-maintain if the Red Hat Satellite 6 is not working correctly unless being specifically told so by support.
+
+Bonus:
+	A full backup or snapshot of the Red Hat Satellite server should be taken before performing such changes, as the Red Hat Satellite application may be affected.
+
+Official_Help: https://access.redhat.com/solutions/4591281

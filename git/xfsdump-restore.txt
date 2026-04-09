@@ -1,0 +1,515 @@
+[root@azrlcdqsd001 ~]# xfsdump -l 0 -f /spark/opt.xfsdump /opt
+xfsdump: using file dump (drive_simple) strategy
+xfsdump: version 3.1.8 (dump format 3.0) - type ^C for status and control
+
+ ============================= dump label dialog ==============================
+
+please enter label for this dump session (timeout in 300 sec)
+ -> opt
+session label entered: "opt"
+
+ --------------------------------- end dialog ---------------------------------
+
+xfsdump: level 0 dump of azrlcdqsd001:/opt
+xfsdump: dump date: Fri Aug  2 08:55:16 2024
+xfsdump: session id: ae3ca55e-d7cb-4418-a8ef-a95dd85c27b7
+xfsdump: session label: "opt"
+xfsdump: ino map phase 1: constructing initial dump list
+xfsdump: ino map phase 2: skipping (no pruning necessary)
+xfsdump: ino map phase 3: skipping (only one dump stream)
+xfsdump: ino map construction complete
+xfsdump: estimated dump size: 1037712576 bytes
+
+ ============================= media label dialog =============================
+
+please enter label for media in drive 0 (timeout in 300 sec)
+ ->
+media label entered: ""
+
+ --------------------------------- end dialog ---------------------------------
+
+xfsdump: WARNING: no media label specified
+xfsdump: creating dump session media file 0 (media 0, file 0)
+xfsdump: dumping ino map
+xfsdump: dumping directories
+xfsdump: dumping non-directory files
+xfsdump: ending media file
+xfsdump: media file size 1037572352 bytes
+xfsdump: dump size (non-dir files) : 1037276528 bytes
+xfsdump: dump complete: 114 seconds elapsed
+xfsdump: Dump Summary:
+xfsdump:   stream 0 /spark/opt.xfsdump OK (success)
+xfsdump: Dump Status: SUCCESS
+[root@azrlcdqsd001 ~]# ls /spark/
+opt.xfsdump
+[root@azrlcdqsd001 ~]#
+
+
+
+
+#########################
+
+
+[root@azrlcdqsd001 ~]# lvs
+  LV      VG      Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  homelv  rootvg  -wi-ao----    4.00g
+  optlv   rootvg  -wi-ao---- <979.02g
+  rootlv  rootvg  -wi-ao----   16.00g
+  tmplv   rootvg  -wi-ao----    4.00g
+  usrlv   rootvg  -wi-ao----   10.00g
+  varlv   rootvg  -wi-ao----   10.00g
+  sparklv sparkvg -wi-ao---- <500.00g
+[root@azrlcdqsd001 ~]# umount /opt
+umount: /opt: target is busy.
+[root@azrlcdqsd001 ~]# lsof /opt
+COMMAND     PID  USER   FD   TYPE DEVICE SIZE/OFF       NODE NAME
+omiserver  1583  root  txt    REG  253,5   939144 1074744460 /opt/omi/bin/omiserver
+omiengine  1584   omi  txt    REG  253,5   930216 1074744457 /opt/omi/bin/omiengine
+ndtask     2052  root  txt    REG  253,5   581960 1074744484 /opt/managesoft/libexec/ndtask
+ndtask     2052  root  mem    REG  253,5  1920976     129173 /opt/managesoft/lib/libstdc++.so.6.0.29
+ndtask     2052  root  mem    REG  253,5   640632     129170 /opt/managesoft/lib/libndtaskd.so
+ndtask     2052  root  mem    REG  253,5    80344     129167 /opt/managesoft/lib/libgcc_s.so.1
+ndtask     2052  root  mem    REG  253,5   347248     129168 /opt/managesoft/lib/libmgscmn.so
+mgsusagea  2063  root  txt    REG  253,5  5124064 1074744481 /opt/managesoft/libexec/mgsusageag
+mgsusagea  2063  root  mem    REG  253,5  1920976     129173 /opt/managesoft/lib/libstdc++.so.6.0.29
+mgsusagea  2063  root  mem    REG  253,5    80344     129167 /opt/managesoft/lib/libgcc_s.so.1
+mgsusagea  2063  root  mem    REG  253,5   347248     129168 /opt/managesoft/lib/libmgscmn.so
+wdavdaemo 16421  root  cwd    DIR  253,5     4096  536892769 /opt/microsoft/mdatp/sbin
+wdavdaemo 16421  root  txt    REG  253,5     7504  536892783 /opt/microsoft/mdatp/sbin/wdavdaemon
+wdavdaemo 16421  root  mem    REG  253,5   539344 1610845829 /opt/microsoft/mdatp/lib/libebpf_loader.so
+wdavdaemo 16421  root  mem    REG  253,5    50104 1610845742 /opt/microsoft/mdatp/lib/libatomic.so.1
+wdavdaemo 16421  root  mem    REG  253,5     7208 1610845748 /opt/microsoft/mdatp/lib/libboost_date_time.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5  5032712 1610845827 /opt/microsoft/mdatp/lib/libcrypto.so.3
+wdavdaemo 16421  root  mem    REG  253,5   672840 1610845834 /opt/microsoft/mdatp/lib/libssl.so.3
+wdavdaemo 16421  root  mem    REG  253,5  4684416 1610845826 /opt/microsoft/mdatp/lib/libcpprest.so.2.10
+wdavdaemo 16421  root  mem    REG  253,5    43232 1610845836 /opt/microsoft/mdatp/lib/libuuid.so.1
+wdavdaemo 16421  root  mem    REG  253,5   230296 1610845833 /opt/microsoft/mdatp/lib/libselinux.so.1
+wdavdaemo 16421  root  mem    REG  253,5   605232 1610845828 /opt/microsoft/mdatp/lib/libcurl.so.4
+wdavdaemo 16421  root  mem    REG  253,5   809008 1610845744 /opt/microsoft/mdatp/lib/libazure-storage-lite.so
+wdavdaemo 16421  root  mem    REG  253,5   163880 1610845743 /opt/microsoft/mdatp/lib/libauparse.so.0
+wdavdaemo 16421  root  mem    REG  253,5   174560 1610845832 /opt/microsoft/mdatp/lib/libseccomp.so.2
+wdavdaemo 16421  root  mem    REG  253,5    24088 1610845754 /opt/microsoft/mdatp/lib/libboost_random.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5   102496 1610845758 /opt/microsoft/mdatp/lib/libboost_thread.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5   288184 1610845755 /opt/microsoft/mdatp/lib/libboost_regex.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5    15776 1610845745 /opt/microsoft/mdatp/lib/libboost_atomic.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5   131792 1610845749 /opt/microsoft/mdatp/lib/libboost_filesystem.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5    28184 1610845746 /opt/microsoft/mdatp/lib/libboost_chrono.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5   731992 1610845751 /opt/microsoft/mdatp/lib/libboost_log.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5 30356016 1610845838 /opt/microsoft/mdatp/lib/libwdavdaemon_edr_dylib.so
+wdavdaemo 16421  root  mem    REG  253,5   127128 1610845831 /opt/microsoft/mdatp/lib/libminizip.so.2.5
+wdavdaemo 16421  root  mem    REG  253,5     7208 1610845757 /opt/microsoft/mdatp/lib/libboost_system.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5     7248 1610845747 /opt/microsoft/mdatp/lib/libboost_context.so.1.83.0
+wdavdaemo 16421  root  mem    REG  253,5 54980960 1610845837 /opt/microsoft/mdatp/lib/libwdavdaemon_core.so
+wdavdaemo 16421  root  mem    REG  253,5  1242360 1610845824 /opt/microsoft/mdatp/lib/libc++.so.1
+wdavdaemo 16421  root  mem    REG  253,5   370344 1610845825 /opt/microsoft/mdatp/lib/libc++abi.so.1
+wdavdaemo 16463  root  cwd    DIR  253,5     4096  536892769 /opt/microsoft/mdatp/sbin
+wdavdaemo 16463  root  txt    REG  253,5     7504  536892783 /opt/microsoft/mdatp/sbin/wdavdaemon
+wdavdaemo 16463  root  mem    REG  253,5    50104 1610845742 /opt/microsoft/mdatp/lib/libatomic.so.1
+wdavdaemo 16463  root  mem    REG  253,5     7208 1610845748 /opt/microsoft/mdatp/lib/libboost_date_time.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5  5032712 1610845827 /opt/microsoft/mdatp/lib/libcrypto.so.3
+wdavdaemo 16463  root  mem    REG  253,5   672840 1610845834 /opt/microsoft/mdatp/lib/libssl.so.3
+wdavdaemo 16463  root  mem    REG  253,5  4684416 1610845826 /opt/microsoft/mdatp/lib/libcpprest.so.2.10
+wdavdaemo 16463  root  mem    REG  253,5    43232 1610845836 /opt/microsoft/mdatp/lib/libuuid.so.1
+wdavdaemo 16463  root  mem    REG  253,5   230296 1610845833 /opt/microsoft/mdatp/lib/libselinux.so.1
+wdavdaemo 16463  root  mem    REG  253,5   605232 1610845828 /opt/microsoft/mdatp/lib/libcurl.so.4
+wdavdaemo 16463  root  mem    REG  253,5   809008 1610845744 /opt/microsoft/mdatp/lib/libazure-storage-lite.so
+wdavdaemo 16463  root  mem    REG  253,5   163880 1610845743 /opt/microsoft/mdatp/lib/libauparse.so.0
+wdavdaemo 16463  root  mem    REG  253,5   174560 1610845832 /opt/microsoft/mdatp/lib/libseccomp.so.2
+wdavdaemo 16463  root  mem    REG  253,5    24088 1610845754 /opt/microsoft/mdatp/lib/libboost_random.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5   102496 1610845758 /opt/microsoft/mdatp/lib/libboost_thread.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5   288184 1610845755 /opt/microsoft/mdatp/lib/libboost_regex.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5    15776 1610845745 /opt/microsoft/mdatp/lib/libboost_atomic.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5   131792 1610845749 /opt/microsoft/mdatp/lib/libboost_filesystem.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5    28184 1610845746 /opt/microsoft/mdatp/lib/libboost_chrono.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5   731992 1610845751 /opt/microsoft/mdatp/lib/libboost_log.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5 30356016 1610845838 /opt/microsoft/mdatp/lib/libwdavdaemon_edr_dylib.so
+wdavdaemo 16463  root  mem    REG  253,5   127128 1610845831 /opt/microsoft/mdatp/lib/libminizip.so.2.5
+wdavdaemo 16463  root  mem    REG  253,5     7208 1610845757 /opt/microsoft/mdatp/lib/libboost_system.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5     7248 1610845747 /opt/microsoft/mdatp/lib/libboost_context.so.1.83.0
+wdavdaemo 16463  root  mem    REG  253,5 54980960 1610845837 /opt/microsoft/mdatp/lib/libwdavdaemon_core.so
+wdavdaemo 16463  root  mem    REG  253,5  1242360 1610845824 /opt/microsoft/mdatp/lib/libc++.so.1
+wdavdaemo 16463  root  mem    REG  253,5   370344 1610845825 /opt/microsoft/mdatp/lib/libc++abi.so.1
+wdavdaemo 16510 mdatp  cwd    DIR  253,5     4096  536892769 /opt/microsoft/mdatp/sbin
+wdavdaemo 16510 mdatp  txt    REG  253,5     7504  536892783 /opt/microsoft/mdatp/sbin/wdavdaemon
+wdavdaemo 16510 mdatp  mem    REG  253,5    50104 1610845742 /opt/microsoft/mdatp/lib/libatomic.so.1
+wdavdaemo 16510 mdatp  mem    REG  253,5     7208 1610845748 /opt/microsoft/mdatp/lib/libboost_date_time.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5  5032712 1610845827 /opt/microsoft/mdatp/lib/libcrypto.so.3
+wdavdaemo 16510 mdatp  mem    REG  253,5   672840 1610845834 /opt/microsoft/mdatp/lib/libssl.so.3
+wdavdaemo 16510 mdatp  mem    REG  253,5  4684416 1610845826 /opt/microsoft/mdatp/lib/libcpprest.so.2.10
+wdavdaemo 16510 mdatp  mem    REG  253,5    43232 1610845836 /opt/microsoft/mdatp/lib/libuuid.so.1
+wdavdaemo 16510 mdatp  mem    REG  253,5   230296 1610845833 /opt/microsoft/mdatp/lib/libselinux.so.1
+wdavdaemo 16510 mdatp  mem    REG  253,5   605232 1610845828 /opt/microsoft/mdatp/lib/libcurl.so.4
+wdavdaemo 16510 mdatp  mem    REG  253,5   809008 1610845744 /opt/microsoft/mdatp/lib/libazure-storage-lite.so
+wdavdaemo 16510 mdatp  mem    REG  253,5   163880 1610845743 /opt/microsoft/mdatp/lib/libauparse.so.0
+wdavdaemo 16510 mdatp  mem    REG  253,5   174560 1610845832 /opt/microsoft/mdatp/lib/libseccomp.so.2
+wdavdaemo 16510 mdatp  mem    REG  253,5    24088 1610845754 /opt/microsoft/mdatp/lib/libboost_random.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5   102496 1610845758 /opt/microsoft/mdatp/lib/libboost_thread.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5   288184 1610845755 /opt/microsoft/mdatp/lib/libboost_regex.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5    15776 1610845745 /opt/microsoft/mdatp/lib/libboost_atomic.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5   131792 1610845749 /opt/microsoft/mdatp/lib/libboost_filesystem.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5    28184 1610845746 /opt/microsoft/mdatp/lib/libboost_chrono.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5   731992 1610845751 /opt/microsoft/mdatp/lib/libboost_log.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5 30356016 1610845838 /opt/microsoft/mdatp/lib/libwdavdaemon_edr_dylib.so
+wdavdaemo 16510 mdatp  mem    REG  253,5   127128 1610845831 /opt/microsoft/mdatp/lib/libminizip.so.2.5
+wdavdaemo 16510 mdatp  mem    REG  253,5     7208 1610845757 /opt/microsoft/mdatp/lib/libboost_system.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5     7248 1610845747 /opt/microsoft/mdatp/lib/libboost_context.so.1.83.0
+wdavdaemo 16510 mdatp  mem    REG  253,5 54980960 1610845837 /opt/microsoft/mdatp/lib/libwdavdaemon_core.so
+wdavdaemo 16510 mdatp  mem    REG  253,5  1242360 1610845824 /opt/microsoft/mdatp/lib/libc++.so.1
+wdavdaemo 16510 mdatp  mem    REG  253,5   370344 1610845825 /opt/microsoft/mdatp/lib/libc++abi.so.1
+mdatp_aud 16679  root  txt    REG  253,5  1679224  536892777 /opt/microsoft/mdatp/sbin/mdatp_audisp_plugin
+mdatp_aud 16679  root  mem    REG  253,5    24088 1610845754 /opt/microsoft/mdatp/lib/libboost_random.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5   163880 1610845743 /opt/microsoft/mdatp/lib/libauparse.so.0
+mdatp_aud 16679  root  mem    REG  253,5  4684416 1610845826 /opt/microsoft/mdatp/lib/libcpprest.so.2.10
+mdatp_aud 16679  root  mem    REG  253,5   230296 1610845833 /opt/microsoft/mdatp/lib/libselinux.so.1
+mdatp_aud 16679  root  mem    REG  253,5    43232 1610845836 /opt/microsoft/mdatp/lib/libuuid.so.1
+mdatp_aud 16679  root  mem    REG  253,5    50104 1610845742 /opt/microsoft/mdatp/lib/libatomic.so.1
+mdatp_aud 16679  root  mem    REG  253,5  5032712 1610845827 /opt/microsoft/mdatp/lib/libcrypto.so.3
+mdatp_aud 16679  root  mem    REG  253,5   672840 1610845834 /opt/microsoft/mdatp/lib/libssl.so.3
+mdatp_aud 16679  root  mem    REG  253,5     7248 1610845747 /opt/microsoft/mdatp/lib/libboost_context.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5     7208 1610845757 /opt/microsoft/mdatp/lib/libboost_system.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5   102496 1610845758 /opt/microsoft/mdatp/lib/libboost_thread.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5   288184 1610845755 /opt/microsoft/mdatp/lib/libboost_regex.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5    28184 1610845746 /opt/microsoft/mdatp/lib/libboost_chrono.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5    15776 1610845745 /opt/microsoft/mdatp/lib/libboost_atomic.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5   131792 1610845749 /opt/microsoft/mdatp/lib/libboost_filesystem.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5   731992 1610845751 /opt/microsoft/mdatp/lib/libboost_log.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5     7208 1610845748 /opt/microsoft/mdatp/lib/libboost_date_time.so.1.83.0
+mdatp_aud 16679  root  mem    REG  253,5  1242360 1610845824 /opt/microsoft/mdatp/lib/libc++.so.1
+mdatp_aud 16679  root  mem    REG  253,5   370344 1610845825 /opt/microsoft/mdatp/lib/libc++abi.so.1
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# scxadmin -status
+omiserver: is running
+omiagent: is stopped
+[root@azrlcdqsd001 ~]# scxadmin -stop
+Trying to stop omi with systemctl
+omi is stopped.
+
+[root@azrlcdqsd001 ~]# systemctl status mdatp.service
+● mdatp.service - Microsoft Defender
+   Loaded: loaded (/usr/lib/systemd/system/mdatp.service; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2024-08-01 22:16:26 PDT; 10h ago
+ Main PID: 16421 (wdavdaemon)
+    Tasks: 121 (limit: 408648)
+   Memory: 236.3M
+   CGroup: /system.slice/mdatp.service
+           ├─16421 /opt/microsoft/mdatp/sbin/wdavdaemon
+           ├─16463 /opt/microsoft/mdatp/sbin/wdavdaemon edr 17 16 --log_level info
+           └─16510 /opt/microsoft/mdatp/sbin/wdavdaemon unprivileged 23 25 27 29 22 --log_level info
+
+Aug 01 22:16:26 azrlcdqsd001 systemd[1]: Started Microsoft Defender.
+[root@azrlcdqsd001 ~]# ^status^stop
+systemctl stop mdatp.service
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# lsof /opt
+COMMAND    PID USER  FD   TYPE DEVICE SIZE/OFF       NODE NAME
+ndtask    2052 root txt    REG  253,5   581960 1074744484 /opt/managesoft/libexec/ndtask
+ndtask    2052 root mem    REG  253,5  1920976     129173 /opt/managesoft/lib/libstdc++.so.6.0.29
+ndtask    2052 root mem    REG  253,5   640632     129170 /opt/managesoft/lib/libndtaskd.so
+ndtask    2052 root mem    REG  253,5    80344     129167 /opt/managesoft/lib/libgcc_s.so.1
+ndtask    2052 root mem    REG  253,5   347248     129168 /opt/managesoft/lib/libmgscmn.so
+mgsusagea 2063 root txt    REG  253,5  5124064 1074744481 /opt/managesoft/libexec/mgsusageag
+mgsusagea 2063 root mem    REG  253,5  1920976     129173 /opt/managesoft/lib/libstdc++.so.6.0.29
+mgsusagea 2063 root mem    REG  253,5    80344     129167 /opt/managesoft/lib/libgcc_s.so.1
+mgsusagea 2063 root mem    REG  253,5   347248     129168 /opt/managesoft/lib/libmgscmn.so
+[root@azrlcdqsd001 ~]# systemctl list-units | grep -i manage
+  init.scope                                                                                                                                                          loaded active running   System and Service Manager            
+  mgsusageag.service                                                                                                                                                  loaded active running   ManageSoft mgsusageag agent           
+  ndtask.service                                                                                                                                                      loaded active running   ManageSoft ndtask agent               
+  NetworkManager-wait-online.service                                                                                                                                  loaded active exited    Network Manager Wait Online           
+  NetworkManager.service                                                                                                                                              loaded active running   Network Manager                       
+  polkit.service                                                                                                                                                      loaded active running   Authorization Manager                 
+  systemd-udevd.service                                                                                                                                               loaded active running   udev Kernel Device Manager            
+  user@23443.service                                                                                                                                                  loaded active running   User Manager for UID 23443            
+  user@34211.service                                                                                                                                                  loaded active running   User Manager for UID 34211            
+  sssd-kcm.socket                                                                                                                                                     loaded active listening SSSD Kerberos Cache Manager responder socket
+[root@azrlcdqsd001 ~]# systemctl list-units | grep -i managesoft
+  mgsusageag.service                                                                                                                                                  loaded active running   ManageSoft mgsusageag agent           
+  ndtask.service                                                                                                                                                      loaded active running   ManageSoft ndtask agent               
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# systemctl status mgsusageag.service
+● mgsusageag.service - ManageSoft mgsusageag agent
+   Loaded: loaded (/etc/init.d/mgsusageag; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2024-08-01 17:45:42 PDT; 15h ago
+    Tasks: 1 (limit: 408648)
+   Memory: 8.0M
+   CGroup: /system.slice/mgsusageag.service
+           └─2063 /opt/managesoft/libexec/mgsusageag
+
+Aug 01 17:45:41 azrlcdqsd001 systemd[1]: Starting ManageSoft mgsusageag agent...
+Aug 01 17:45:42 azrlcdqsd001 mgsusageag[1984]: Starting mgsusageag: [  OK  ]
+Aug 01 17:45:42 azrlcdqsd001 systemd[1]: Started ManageSoft mgsusageag agent.
+[root@azrlcdqsd001 ~]# ^status^stop
+systemctl stop mgsusageag.service
+[root@azrlcdqsd001 ~]# systemctl status ndtask.service
+● ndtask.service - ManageSoft ndtask agent
+   Loaded: loaded (/etc/init.d/ndtask; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2024-08-01 17:45:42 PDT; 15h ago
+    Tasks: 1 (limit: 408648)
+   Memory: 41.1M
+   CGroup: /system.slice/ndtask.service
+           └─2052 /opt/managesoft/libexec/ndtask
+
+Aug 01 17:45:41 azrlcdqsd001 systemd[1]: Starting ManageSoft ndtask agent...
+Aug 01 17:45:42 azrlcdqsd001 ndtask[1985]: Starting ndtask: [  OK  ]
+Aug 01 17:45:42 azrlcdqsd001 systemd[1]: Started ManageSoft ndtask agent.
+[root@azrlcdqsd001 ~]# ^status^stop
+systemctl stop ndtask.service
+[root@azrlcdqsd001 ~]# lsof /opt
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# umount /opt
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+devtmpfs                      32G     0   32G   0% /dev
+tmpfs                         32G     0   32G   0% /dev/shm
+tmpfs                         32G   49M   32G   1% /run
+tmpfs                         32G     0   32G   0% /sys/fs/cgroup
+/dev/mapper/rootvg-rootlv     16G  186M   16G   2% /
+/dev/mapper/rootvg-usrlv      10G  2.7G  7.4G  27% /usr
+/dev/mapper/rootvg-varlv      10G  1.3G  8.8G  13% /var
+/dev/mapper/rootvg-homelv    4.0G   63M  4.0G   2% /home
+/dev/mapper/rootvg-tmplv     4.0G   62M  4.0G   2% /tmp
+/dev/sdb1                    496M  176M  321M  36% /boot
+/dev/sdb15                   495M  5.9M  489M   2% /boot/efi
+/dev/sda1                    126G  2.1G  118G   2% /mnt
+tmpfs                        6.3G     0  6.3G   0% /run/user/23443
+tmpfs                        6.3G     0  6.3G   0% /run/user/34211
+/dev/mapper/sparkvg-sparklv  500G  4.5G  496G   1% /spark
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# lvs
+  LV      VG      Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  homelv  rootvg  -wi-ao----    4.00g
+  optlv   rootvg  -wi-a----- <979.02g
+  rootlv  rootvg  -wi-ao----   16.00g
+  tmplv   rootvg  -wi-ao----    4.00g
+  usrlv   rootvg  -wi-ao----   10.00g
+  varlv   rootvg  -wi-ao----   10.00g
+  sparklv sparkvg -wi-ao---- <500.00g
+[root@azrlcdqsd001 ~]# lvremove optlv
+  Volume group "optlv" not found
+  Cannot process volume group optlv
+[root@azrlcdqsd001 ~]# lvremove /dev/rootvg/optlv
+Do you really want to remove active logical volume rootvg/optlv? [y/n]: y
+  Logical volume "optlv" successfully removed.
+[root@azrlcdqsd001 ~]# vgs
+  VG      #PV #LV #SN Attr   VSize     VFree
+  rootvg    1   5   0 wz--n- <1023.02g <979.02g
+  sparkvg   1   1   0 wz--n-  <500.00g       0
+[root@azrlcdqsd001 ~]# lvcreate -L +850G -n optlv rootvg
+WARNING: xfs signature detected on /dev/rootvg/optlv at offset 0. Wipe it? [y/n]: y
+  Wiping xfs signature on /dev/rootvg/optlv.
+  Logical volume "optlv" created.
+[root@azrlcdqsd001 ~]# lvs
+  LV      VG      Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  homelv  rootvg  -wi-ao----    4.00g
+  optlv   rootvg  -wi-a-----  850.00g
+  rootlv  rootvg  -wi-ao----   16.00g
+  tmplv   rootvg  -wi-ao----    4.00g
+  usrlv   rootvg  -wi-ao----   10.00g
+  varlv   rootvg  -wi-ao----   10.00g
+  sparklv sparkvg -wi-ao---- <500.00g
+[root@azrlcdqsd001 ~]# mkfs.xfs /dev/rootvg/optlv
+meta-data=/dev/rootvg/optlv      isize=512    agcount=4, agsize=55705600 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=0 inobtcount=0
+data     =                       bsize=4096   blocks=222822400, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=108800, version=2
+         =                       sectsz=4096  sunit=1 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+Discarding blocks...Done.
+
+lvs
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# lvs
+  LV      VG      Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  homelv  rootvg  -wi-ao----    4.00g
+  optlv   rootvg  -wi-a-----  850.00g
+  rootlv  rootvg  -wi-ao----   16.00g
+  tmplv   rootvg  -wi-ao----    4.00g
+  usrlv   rootvg  -wi-ao----   10.00g
+  varlv   rootvg  -wi-ao----   10.00g
+  sparklv sparkvg -wi-ao---- <500.00g
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# mount /opt/
+[root@azrlcdqsd001 ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+devtmpfs                      32G     0   32G   0% /dev
+tmpfs                         32G     0   32G   0% /dev/shm
+tmpfs                         32G   49M   32G   1% /run
+tmpfs                         32G     0   32G   0% /sys/fs/cgroup
+/dev/mapper/rootvg-rootlv     16G  186M   16G   2% /
+/dev/mapper/rootvg-usrlv      10G  2.7G  7.4G  27% /usr
+/dev/mapper/rootvg-varlv      10G  1.3G  8.8G  13% /var
+/dev/mapper/rootvg-homelv    4.0G   63M  4.0G   2% /home
+/dev/mapper/rootvg-tmplv     4.0G   62M  4.0G   2% /tmp
+/dev/sdb1                    496M  176M  321M  36% /boot
+/dev/sdb15                   495M  5.9M  489M   2% /boot/efi
+/dev/sda1                    126G  2.1G  118G   2% /mnt
+tmpfs                        6.3G     0  6.3G   0% /run/user/23443
+tmpfs                        6.3G     0  6.3G   0% /run/user/34211
+/dev/mapper/sparkvg-sparklv  500G  4.5G  496G   1% /spark
+/dev/mapper/rootvg-optlv     850G  6.0G  844G   1% /opt
+[root@azrlcdqsd001 ~]# lvs
+  LV      VG      Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  homelv  rootvg  -wi-ao----    4.00g
+  optlv   rootvg  -wi-ao----  850.00g
+  rootlv  rootvg  -wi-ao----   16.00g
+  tmplv   rootvg  -wi-ao----    4.00g
+  usrlv   rootvg  -wi-ao----   10.00g
+  varlv   rootvg  -wi-ao----   10.00g
+  sparklv sparkvg -wi-ao---- <500.00g
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# ls /opt/
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# xfsrestore -f /spark/opt.xfsdump /opt
+xfsrestore: using file dump (drive_simple) strategy
+xfsrestore: version 3.1.8 (dump format 3.0) - type ^C for status and control
+xfsrestore: searching media for dump
+xfsrestore: examining media file 0
+xfsrestore: dump description:
+xfsrestore: hostname: azrlcdqsd001
+xfsrestore: mount point: /opt
+xfsrestore: volume: /dev/mapper/rootvg-optlv
+xfsrestore: session time: Fri Aug  2 08:55:16 2024
+xfsrestore: level: 0
+xfsrestore: session label: "opt"
+xfsrestore: media label: ""
+xfsrestore: file system id: c46dacad-f955-4206-9ef2-01f3e4189101
+xfsrestore: session id: ae3ca55e-d7cb-4418-a8ef-a95dd85c27b7
+xfsrestore: media id: b46694c6-5339-4dd7-9650-7ae0e4c1d5cc
+xfsrestore: using online session inventory
+xfsrestore: searching media for directory dump
+xfsrestore: reading directories
+xfsrestore: 44 directories and 406 entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: 1 seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream 0 /spark/opt.xfsdump OK (success)
+xfsrestore: Restore Status: SUCCESS
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# ls /opt/
+apps  CrowdStrike  logrhythm  managesoft  microsoft  omi
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# history | grep -i systemctl
+   51  systemctl daemon-reload
+   66  systemctl status mdatp.service
+   67  systemctl stop mdatp.service
+   69  systemctl list-units | grep -i manage
+   70  systemctl list-units | grep -i managesoft
+   71  systemctl status mgsusageag.service
+   72  systemctl stop mgsusageag.service
+   73  systemctl status ndtask.service
+   74  systemctl stop ndtask.service
+   92  history | grep -i systemctl
+[root@azrlcdqsd001 ~]# systemctl start mdatp.service
+[root@azrlcdqsd001 ~]# systemctl start mgsusageag.service
+[root@azrlcdqsd001 ~]# systemctl start ndtask.service
+[root@azrlcdqsd001 ~]# scxadmin -start
+Trying to start omi with systemctl
+omi is started.
+
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+devtmpfs                      32G     0   32G   0% /dev
+tmpfs                         32G     0   32G   0% /dev/shm
+tmpfs                         32G   49M   32G   1% /run
+tmpfs                         32G     0   32G   0% /sys/fs/cgroup
+/dev/mapper/rootvg-rootlv     16G  186M   16G   2% /
+/dev/mapper/rootvg-usrlv      10G  2.7G  7.4G  27% /usr
+/dev/mapper/rootvg-varlv      10G  1.3G  8.8G  13% /var
+/dev/mapper/rootvg-homelv    4.0G   63M  4.0G   2% /home
+/dev/mapper/rootvg-tmplv     4.0G   62M  4.0G   2% /tmp
+/dev/sdb1                    496M  176M  321M  36% /boot
+/dev/sdb15                   495M  5.9M  489M   2% /boot/efi
+/dev/sda1                    126G  2.1G  118G   2% /mnt
+tmpfs                        6.3G     0  6.3G   0% /run/user/23443
+tmpfs                        6.3G     0  6.3G   0% /run/user/34211
+/dev/mapper/sparkvg-sparklv  500G  4.5G  496G   1% /spark
+/dev/mapper/rootvg-optlv     850G  7.0G  843G   1% /opt
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# vgs
+  VG      #PV #LV #SN Attr   VSize     VFree
+  rootvg    1   6   0 wz--n- <1023.02g <129.02g
+  sparkvg   1   1   0 wz--n-  <500.00g       0
+[root@azrlcdqsd001 ~]# lvextend -L +96G /dev/rootvg/tmplv -r
+  Size of logical volume rootvg/tmplv changed from 4.00 GiB (1024 extents) to 100.00 GiB (25600 extents).
+  Logical volume rootvg/tmplv successfully resized.
+meta-data=/dev/mapper/rootvg-tmplv isize=512    agcount=8, agsize=131072 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=0 inobtcount=0
+data     =                       bsize=4096   blocks=1048576, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=4096  sunit=1 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+data blocks changed from 1048576 to 26214400
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+devtmpfs                      32G     0   32G   0% /dev
+tmpfs                         32G     0   32G   0% /dev/shm
+tmpfs                         32G   49M   32G   1% /run
+tmpfs                         32G     0   32G   0% /sys/fs/cgroup
+/dev/mapper/rootvg-rootlv     16G  186M   16G   2% /
+/dev/mapper/rootvg-usrlv      10G  2.7G  7.4G  27% /usr
+/dev/mapper/rootvg-varlv      10G  1.3G  8.8G  13% /var
+/dev/mapper/rootvg-homelv    4.0G   63M  4.0G   2% /home
+/dev/mapper/rootvg-tmplv     100G  762M  100G   1% /tmp
+/dev/sdb1                    496M  176M  321M  36% /boot
+/dev/sdb15                   495M  5.9M  489M   2% /boot/efi
+/dev/sda1                    126G  2.1G  118G   2% /mnt
+tmpfs                        6.3G     0  6.3G   0% /run/user/23443
+tmpfs                        6.3G     0  6.3G   0% /run/user/34211
+/dev/mapper/sparkvg-sparklv  500G  4.5G  496G   1% /spark
+/dev/mapper/rootvg-optlv     850G  7.0G  843G   1% /opt
+tmpfs                        6.3G     0  6.3G   0% /run/user/0
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+[root@azrlcdqsd001 ~]#
+
+
+
+[root@azrlcdqsd001 ~]# xfsrestore -f /spark/opt.xfsdump /opt
+xfsrestore: using file dump (drive_simple) strategy
+xfsrestore: version 3.1.8 (dump format 3.0) - type ^C for status and control
+xfsrestore: searching media for dump
+xfsrestore: examining media file 0
+xfsrestore: dump description:
+xfsrestore: hostname: azrlcdqsd001
+xfsrestore: mount point: /opt
+xfsrestore: volume: /dev/mapper/rootvg-optlv
+xfsrestore: session time: Fri Aug  2 08:55:16 2024
+xfsrestore: level: 0
+xfsrestore: session label: "opt"
+xfsrestore: media label: ""
+xfsrestore: file system id: c46dacad-f955-4206-9ef2-01f3e4189101
+xfsrestore: session id: ae3ca55e-d7cb-4418-a8ef-a95dd85c27b7
+xfsrestore: media id: b46694c6-5339-4dd7-9650-7ae0e4c1d5cc
+xfsrestore: using online session inventory
+xfsrestore: searching media for directory dump
+xfsrestore: reading directories
+xfsrestore: 44 directories and 406 entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: 1 seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream 0 /spark/opt.xfsdump OK (success)
+xfsrestore: Restore Status: SUCCESS
+[root@azrlcdqsd001 ~]#
+
